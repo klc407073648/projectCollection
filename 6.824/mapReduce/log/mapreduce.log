@@ -1,0 +1,285 @@
+[root@VM-0-10-centos main]# ./test-mr.sh
++ RACE=-race
++ rm -rf mr-tmp
++ mkdir mr-tmp
++ cd mr-tmp
++ rm -f 'mr-*'
++ cd ../../mrapps
++ go build -race -buildmode=plugin wc.go
++ cd ../../mrapps
++ go build -race -buildmode=plugin indexer.go
++ cd ../../mrapps
++ go build -race -buildmode=plugin mtiming.go
++ cd ../../mrapps
++ go build -race -buildmode=plugin rtiming.go
++ cd ../../mrapps
++ go build -race -buildmode=plugin crash.go
++ cd ../../mrapps
++ go build -race -buildmode=plugin nocrash.go
++ cd ..
++ go build -race mrmaster.go
++ cd ..
++ go build -race mrworker.go
++ cd ..
++ go build -race mrsequential.go
++ failed_any=0
++ ../mrsequential ../../mrapps/wc.so ../pg-being_ernest.txt ../pg-dorian_gray.txt ../pg-frankenstein.txt ../pg-grimm.txt ../pg-huckleberry_finn.txt ../pg-metamorphosis.txt ../pg-sherlock_holmes.txt ../pg-tom_sawyer.txt
++ sort mr-out-0
++ rm -f mr-out-0
++ echo '***' Starting wc test.
+*** Starting wc test.
++ sleep 1
++ timeout -k 2s 180s ../mrmaster ../pg-being_ernest.txt ../pg-dorian_gray.txt ../pg-frankenstein.txt ../pg-grimm.txt ../pg-huckleberry_finn.txt ../pg-metamorphosis.txt ../pg-sherlock_holmes.txt ../pg-tom_sawyer.txt
+2021/07/31 20:08:17 DEBUG:[Master::MakeMaster] begin
+2021/07/31 20:08:17 INFO:[Master::MakeMaster] master info:{files:[../pg-being_ernest.txt ../pg-dorian_gray.txt ../pg-frankenstein.txt ../pg-grimm.txt ../pg-huckleberry_finn.txt ../pg-metamorphosis.txt ../pg-sherlock_holmes.txt ../pg-tom_sawyer.txt] nReduce:10 taskPhase:0 taskStats:[] mu:{state:0 sema:0} done:false workerSeq:0 taskCh:0xc00005a660}
+2021/07/31 20:08:17 DEBUG:[Master::initMapTask] in
+2021/07/31 20:08:17 DEBUG:[Master::initMapTask] m.taskStats:[{Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC}]
+2021/07/31 20:08:17 DEBUG:[Master::server] start a thread that listens for RPCs from worker
+2021/07/31 20:08:17 rpc.Register: method "Done" has 1 input parameters; needs exactly three
+2021/07/31 20:08:17 DEBUG:[Master::tickSchedule] in
+2021/07/31 20:08:17 DEBUG:[Master::schedule] in
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:0, taskPhase:0, taskFileName:../pg-being_ernest.txt
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:1, taskPhase:0, taskFileName:../pg-dorian_gray.txt
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:2, taskPhase:0, taskFileName:../pg-frankenstein.txt
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:3, taskPhase:0, taskFileName:../pg-grimm.txt
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:4, taskPhase:0, taskFileName:../pg-huckleberry_finn.txt
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:5, taskPhase:0, taskFileName:../pg-metamorphosis.txt
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:6, taskPhase:0, taskFileName:../pg-sherlock_holmes.txt
+2021/07/31 20:08:17 DEBUG:[Master::getTask] taskSeq:7, taskPhase:0, taskFileName:../pg-tom_sawyer.txt
+2021/07/31 20:08:17 INFO:[Master::server] socket:&{fd:0xc0000ce380 path:/var/tmp/824-mr-0 unlink:true unlinkOnce:{done:0 m:{state:0 sema:0}}} listen /var/tmp/824-mr-0
+2021/07/31 20:08:17 DEBUG:[Master::MakeMaster] end
+2021/07/31 20:08:18 DEBUG:[Master::schedule] in
++ wait
++ timeout -k 2s 180s ../mrworker ../../mrapps/wc.so
++ timeout -k 2s 180s ../mrworker ../../mrapps/wc.so
++ timeout -k 2s 180s ../mrworker ../../mrapps/wc.so
+2021/07/31 20:08:18 DEBUG:[Master::schedule] in
+2021/07/31 20:08:18 DEBUG:[Worker::Worker] begin
+2021/07/31 20:08:18 DEBUG:[Worker::Worker] begin
+2021/07/31 20:08:18 DEBUG:[Worker::Worker] begin
+2021/07/31 20:08:18 DEBUG:[Master::RegWorker] reply.WorkerId = m.workerSeq = 1
+2021/07/31 20:08:18 DEBUG:[Master::RegWorker] reply.WorkerId = m.workerSeq = 2
+2021/07/31 20:08:18 DEBUG:[Master::RegWorker] reply.WorkerId = m.workerSeq = 3
+2021/07/31 20:08:18 DEBUG:[Worker::register] args:&{},reply:&{WorkerId:1}
+2021/07/31 20:08:18 DEBUG:[Worker::run] in
+2021/07/31 20:08:18 DEBUG:[Worker::register] args:&{},reply:&{WorkerId:2}
+2021/07/31 20:08:18 DEBUG:[Worker::run] in
+2021/07/31 20:08:18 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:1 StartTime:2021-07-31 20:08:18.871631131 +0800 CST m=+1.062127791}
+2021/07/31 20:08:18 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:1}, reply:&{Task:0xc00010ae00}
+2021/07/31 20:08:18 DEBUG:[Worker::register] args:&{},reply:&{WorkerId:3}
+2021/07/31 20:08:18 DEBUG:[Worker::run] in
+2021/07/31 20:08:18 INFO:[Worker::reqTask] 1 worker get task:&{FileName:../pg-being_ernest.txt NReduce:10 NMaps:8 Seq:0 Phase:0 Alive:true}
+2021/07/31 20:08:18 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:18 DEBUG:[Worker::doMapTask] WorkerId:1 begin
+2021/07/31 20:08:18 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:2 StartTime:2021-07-31 20:08:18.877499627 +0800 CST m=+1.067996287}
+2021/07/31 20:08:18 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:2}, reply:&{Task:0xc00010b500}
+2021/07/31 20:08:18 INFO:[Worker::reqTask] 2 worker get task:&{FileName:../pg-dorian_gray.txt NReduce:10 NMaps:8 Seq:1 Phase:0 Alive:true}
+2021/07/31 20:08:18 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:18 DEBUG:[Worker::doMapTask] WorkerId:2 begin
+2021/07/31 20:08:18 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:3 StartTime:2021-07-31 20:08:18.881763746 +0800 CST m=+1.072260426}
+2021/07/31 20:08:18 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:3}, reply:&{Task:0xc00010b800}
+2021/07/31 20:08:18 INFO:[Worker::reqTask] 3 worker get task:&{FileName:../pg-frankenstein.txt NReduce:10 NMaps:8 Seq:2 Phase:0 Alive:true}
+2021/07/31 20:08:18 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:18 DEBUG:[Worker::doMapTask] WorkerId:3 begin
+2021/07/31 20:08:19 DEBUG:[Master::schedule] in
+2021/07/31 20:08:19 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:0 Phase:0 WorkerId:1}, taskPhase: 0
+2021/07/31 20:08:19 DEBUG:[Master::schedule] in
+2021/07/31 20:08:19 DEBUG:[Worker::reportTask] info args:{Done:true Seq:0 Phase:0 WorkerId:1},reply:{}
+2021/07/31 20:08:19 DEBUG:[Worker::doMapTask] WorkerId:1 end
+2021/07/31 20:08:19 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:1 StartTime:2021-07-31 20:08:19.721797816 +0800 CST m=+1.912294483}
+2021/07/31 20:08:19 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:1}, reply:&{Task:0xc00013a200}
+2021/07/31 20:08:19 INFO:[Worker::reqTask] 1 worker get task:&{FileName:../pg-grimm.txt NReduce:10 NMaps:8 Seq:3 Phase:0 Alive:true}
+2021/07/31 20:08:19 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:19 DEBUG:[Worker::doMapTask] WorkerId:1 begin
+2021/07/31 20:08:19 DEBUG:[Master::schedule] in
+2021/07/31 20:08:20 DEBUG:[Master::schedule] in
+2021/07/31 20:08:20 DEBUG:[Master::schedule] in
+2021/07/31 20:08:21 DEBUG:[Master::schedule] in
+2021/07/31 20:08:21 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:2 Phase:0 WorkerId:3}, taskPhase: 0
+2021/07/31 20:08:21 DEBUG:[Master::schedule] in
+2021/07/31 20:08:21 DEBUG:[Worker::reportTask] info args:{Done:true Seq:2 Phase:0 WorkerId:3},reply:{}
+2021/07/31 20:08:21 DEBUG:[Worker::doMapTask] WorkerId:3 end
+2021/07/31 20:08:21 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:3 StartTime:2021-07-31 20:08:21.523969085 +0800 CST m=+3.714465745}
+2021/07/31 20:08:21 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:3}, reply:&{Task:0xc00013ab00}
+2021/07/31 20:08:21 INFO:[Worker::reqTask] 3 worker get task:&{FileName:../pg-huckleberry_finn.txt NReduce:10 NMaps:8 Seq:4 Phase:0 Alive:true}
+2021/07/31 20:08:21 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:21 DEBUG:[Worker::doMapTask] WorkerId:3 begin
+2021/07/31 20:08:21 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:1 Phase:0 WorkerId:2}, taskPhase: 0
+2021/07/31 20:08:21 DEBUG:[Master::schedule] in
+2021/07/31 20:08:21 DEBUG:[Worker::reportTask] info args:{Done:true Seq:1 Phase:0 WorkerId:2},reply:{}
+2021/07/31 20:08:21 DEBUG:[Worker::doMapTask] WorkerId:2 end
+2021/07/31 20:08:21 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:2 StartTime:2021-07-31 20:08:21.674272936 +0800 CST m=+3.864769601}
+2021/07/31 20:08:21 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:2}, reply:&{Task:0xc00013b400}
+2021/07/31 20:08:21 INFO:[Worker::reqTask] 2 worker get task:&{FileName:../pg-metamorphosis.txt NReduce:10 NMaps:8 Seq:5 Phase:0 Alive:true}
+2021/07/31 20:08:21 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:21 DEBUG:[Worker::doMapTask] WorkerId:2 begin
+2021/07/31 20:08:21 DEBUG:[Master::schedule] in
+2021/07/31 20:08:22 DEBUG:[Master::schedule] in
+2021/07/31 20:08:22 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:5 Phase:0 WorkerId:2}, taskPhase: 0
+2021/07/31 20:08:22 DEBUG:[Master::schedule] in
+2021/07/31 20:08:22 DEBUG:[Worker::reportTask] info args:{Done:true Seq:5 Phase:0 WorkerId:2},reply:{}
+2021/07/31 20:08:22 DEBUG:[Worker::doMapTask] WorkerId:2 end
+2021/07/31 20:08:22 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:2 StartTime:2021-07-31 20:08:22.498099946 +0800 CST m=+4.688596601}
+2021/07/31 20:08:22 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:2}, reply:&{Task:0xc00013bd00}
+2021/07/31 20:08:22 INFO:[Worker::reqTask] 2 worker get task:&{FileName:../pg-sherlock_holmes.txt NReduce:10 NMaps:8 Seq:6 Phase:0 Alive:true}
+2021/07/31 20:08:22 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:22 DEBUG:[Worker::doMapTask] WorkerId:2 begin
+2021/07/31 20:08:22 DEBUG:[Master::schedule] in
+2021/07/31 20:08:23 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:3 Phase:0 WorkerId:1}, taskPhase: 0
+2021/07/31 20:08:23 DEBUG:[Master::schedule] in
+2021/07/31 20:08:23 DEBUG:[Worker::reportTask] info args:{Done:true Seq:3 Phase:0 WorkerId:1},reply:{}
+2021/07/31 20:08:23 DEBUG:[Worker::doMapTask] WorkerId:1 end
+2021/07/31 20:08:23 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:1 StartTime:2021-07-31 20:08:23.283787545 +0800 CST m=+5.474284205}
+2021/07/31 20:08:23 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:1}, reply:&{Task:0xc000178600}
+2021/07/31 20:08:23 INFO:[Worker::reqTask] 1 worker get task:&{FileName:../pg-tom_sawyer.txt NReduce:10 NMaps:8 Seq:7 Phase:0 Alive:true}
+2021/07/31 20:08:23 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:23 DEBUG:[Worker::doMapTask] WorkerId:1 begin
+2021/07/31 20:08:23 DEBUG:[Master::schedule] in
+2021/07/31 20:08:23 DEBUG:[Master::schedule] in
+2021/07/31 20:08:24 DEBUG:[Master::schedule] in
+2021/07/31 20:08:24 DEBUG:[Master::schedule] in
+2021/07/31 20:08:25 DEBUG:[Master::schedule] in
+2021/07/31 20:08:25 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:4 Phase:0 WorkerId:3}, taskPhase: 0
+2021/07/31 20:08:25 DEBUG:[Master::schedule] in
+2021/07/31 20:08:25 DEBUG:[Worker::reportTask] info args:{Done:true Seq:4 Phase:0 WorkerId:3},reply:{}
+2021/07/31 20:08:25 DEBUG:[Worker::doMapTask] WorkerId:3 end
+2021/07/31 20:08:25 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:7 Phase:0 WorkerId:1}, taskPhase: 0
+2021/07/31 20:08:25 DEBUG:[Master::schedule] in
+2021/07/31 20:08:25 DEBUG:[Worker::reportTask] info args:{Done:true Seq:7 Phase:0 WorkerId:1},reply:{}
+2021/07/31 20:08:25 DEBUG:[Worker::doMapTask] WorkerId:1 end
+2021/07/31 20:08:25 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:6 Phase:0 WorkerId:2}, taskPhase: 0
+2021/07/31 20:08:25 DEBUG:[Master::schedule] in
+2021/07/31 20:08:25 DEBUG:[Master::initReduceTask] in
+2021/07/31 20:08:25 DEBUG:[Master::initReduceTask] m.taskStats:[{Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC} {Status:0 WorkerId:0 StartTime:0001-01-01 00:00:00 +0000 UTC}]
+2021/07/31 20:08:25 DEBUG:[Master::schedule] in
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:0, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:1, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:2, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:3, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:4, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:5, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:6, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:7, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:8, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::getTask] taskSeq:9, taskPhase:1, taskFileName:
+2021/07/31 20:08:25 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:1 StartTime:2021-07-31 20:08:25.858148061 +0800 CST m=+8.048644707}
+2021/07/31 20:08:25 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:1}, reply:&{Task:0xc000179740}
+2021/07/31 20:08:25 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:3 StartTime:2021-07-31 20:08:25.85839972 +0800 CST m=+8.048896367}
+2021/07/31 20:08:25 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:3}, reply:&{Task:0xc000178f40}
+2021/07/31 20:08:25 INFO:[Worker::reqTask] 1 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:1 Phase:1 Alive:true}
+2021/07/31 20:08:25 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:25 DEBUG:[Worker::doReduceTask] WorkerId:1 begin
+2021/07/31 20:08:25 INFO:[Worker::reqTask] 3 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:0 Phase:1 Alive:true}
+2021/07/31 20:08:25 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:25 DEBUG:[Worker::doReduceTask] WorkerId:3 begin
+2021/07/31 20:08:25 DEBUG:[Worker::reportTask] info args:{Done:true Seq:6 Phase:0 WorkerId:2},reply:{}
+2021/07/31 20:08:25 DEBUG:[Worker::doMapTask] WorkerId:2 end
+2021/07/31 20:08:25 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:2 StartTime:2021-07-31 20:08:25.876475549 +0800 CST m=+8.066972229}
+2021/07/31 20:08:25 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:2}, reply:&{Task:0xc0001aa180}
+2021/07/31 20:08:25 INFO:[Worker::reqTask] 2 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:2 Phase:1 Alive:true}
+2021/07/31 20:08:25 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:25 DEBUG:[Worker::doReduceTask] WorkerId:2 begin
+2021/07/31 20:08:26 DEBUG:[Master::schedule] in
+2021/07/31 20:08:26 DEBUG:[Master::schedule] in
+2021/07/31 20:08:27 DEBUG:[Master::schedule] in
+2021/07/31 20:08:27 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:1 Phase:1 WorkerId:1}, taskPhase: 1
+2021/07/31 20:08:27 DEBUG:[Master::schedule] in
+2021/07/31 20:08:27 DEBUG:[Worker::reportTask] info args:{Done:true Seq:1 Phase:1 WorkerId:1},reply:{}
+2021/07/31 20:08:27 DEBUG:[Worker::doReduceTask] WorkerId:1 end
+2021/07/31 20:08:27 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:1 StartTime:2021-07-31 20:08:27.375891524 +0800 CST m=+9.566388179}
+2021/07/31 20:08:27 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:1}, reply:&{Task:0xc0001aaac0}
+2021/07/31 20:08:27 INFO:[Worker::reqTask] 1 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:3 Phase:1 Alive:true}
+2021/07/31 20:08:27 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:27 DEBUG:[Worker::doReduceTask] WorkerId:1 begin
+2021/07/31 20:08:27 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:0 Phase:1 WorkerId:3}, taskPhase: 1
+2021/07/31 20:08:27 DEBUG:[Master::schedule] in
+2021/07/31 20:08:27 DEBUG:[Worker::reportTask] info args:{Done:true Seq:0 Phase:1 WorkerId:3},reply:{}
+2021/07/31 20:08:27 DEBUG:[Worker::doReduceTask] WorkerId:3 end
+2021/07/31 20:08:27 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:3 StartTime:2021-07-31 20:08:27.464549757 +0800 CST m=+9.655046414}
+2021/07/31 20:08:27 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:3}, reply:&{Task:0xc0001ab440}
+2021/07/31 20:08:27 INFO:[Worker::reqTask] 3 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:4 Phase:1 Alive:true}
+2021/07/31 20:08:27 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:27 DEBUG:[Worker::doReduceTask] WorkerId:3 begin
+2021/07/31 20:08:27 DEBUG:[Master::schedule] in
+2021/07/31 20:08:28 DEBUG:[Master::schedule] in
+2021/07/31 20:08:28 DEBUG:[Master::schedule] in
+2021/07/31 20:08:28 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:3 Phase:1 WorkerId:1}, taskPhase: 1
+2021/07/31 20:08:28 DEBUG:[Master::schedule] in
+2021/07/31 20:08:28 DEBUG:[Worker::reportTask] info args:{Done:true Seq:3 Phase:1 WorkerId:1},reply:{}
+2021/07/31 20:08:28 DEBUG:[Worker::doReduceTask] WorkerId:1 end
+2021/07/31 20:08:28 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:1 StartTime:2021-07-31 20:08:28.875235519 +0800 CST m=+11.065732181}
+2021/07/31 20:08:28 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:1}, reply:&{Task:0xc0001abd40}
+2021/07/31 20:08:28 INFO:[Worker::reqTask] 1 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:5 Phase:1 Alive:true}
+2021/07/31 20:08:28 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:28 DEBUG:[Worker::doReduceTask] WorkerId:1 begin
+2021/07/31 20:08:29 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:2 Phase:1 WorkerId:2}, taskPhase: 1
+2021/07/31 20:08:29 DEBUG:[Master::schedule] in
+2021/07/31 20:08:29 DEBUG:[Worker::reportTask] info args:{Done:true Seq:2 Phase:1 WorkerId:2},reply:{}
+2021/07/31 20:08:29 DEBUG:[Worker::doReduceTask] WorkerId:2 end
+2021/07/31 20:08:29 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:2 StartTime:2021-07-31 20:08:29.255151192 +0800 CST m=+11.445647872}
+2021/07/31 20:08:29 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:2}, reply:&{Task:0xc0001e2680}
+2021/07/31 20:08:29 INFO:[Worker::reqTask] 2 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:6 Phase:1 Alive:true}
+2021/07/31 20:08:29 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:29 DEBUG:[Worker::doReduceTask] WorkerId:2 begin
+2021/07/31 20:08:29 DEBUG:[Master::schedule] in
+2021/07/31 20:08:29 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:4 Phase:1 WorkerId:3}, taskPhase: 1
+2021/07/31 20:08:29 DEBUG:[Master::schedule] in
+2021/07/31 20:08:29 DEBUG:[Worker::reportTask] info args:{Done:true Seq:4 Phase:1 WorkerId:3},reply:{}
+2021/07/31 20:08:29 DEBUG:[Worker::doReduceTask] WorkerId:3 end
+2021/07/31 20:08:29 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:3 StartTime:2021-07-31 20:08:29.616524759 +0800 CST m=+11.807021414}
+2021/07/31 20:08:29 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:3}, reply:&{Task:0xc0001e2f80}
+2021/07/31 20:08:29 INFO:[Worker::reqTask] 3 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:7 Phase:1 Alive:true}
+2021/07/31 20:08:29 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:29 DEBUG:[Worker::doReduceTask] WorkerId:3 begin
+2021/07/31 20:08:29 DEBUG:[Master::schedule] in
+2021/07/31 20:08:30 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:5 Phase:1 WorkerId:1}, taskPhase: 1
+2021/07/31 20:08:30 DEBUG:[Master::schedule] in
+2021/07/31 20:08:30 DEBUG:[Worker::reportTask] info args:{Done:true Seq:5 Phase:1 WorkerId:1},reply:{}
+2021/07/31 20:08:30 DEBUG:[Worker::doReduceTask] WorkerId:1 end
+2021/07/31 20:08:30 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:1 StartTime:2021-07-31 20:08:30.343740252 +0800 CST m=+12.534236939}
+2021/07/31 20:08:30 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:1}, reply:&{Task:0xc0001e3880}
+2021/07/31 20:08:30 INFO:[Worker::reqTask] 1 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:8 Phase:1 Alive:true}
+2021/07/31 20:08:30 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:30 DEBUG:[Worker::doReduceTask] WorkerId:1 begin
+2021/07/31 20:08:30 DEBUG:[Master::schedule] in
+2021/07/31 20:08:30 DEBUG:[Master::schedule] in
+2021/07/31 20:08:31 DEBUG:[Master::schedule] in
+2021/07/31 20:08:31 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:7 Phase:1 WorkerId:3}, taskPhase: 1
+2021/07/31 20:08:31 DEBUG:[Master::schedule] in
+2021/07/31 20:08:31 DEBUG:[Worker::reportTask] info args:{Done:true Seq:7 Phase:1 WorkerId:3},reply:{}
+2021/07/31 20:08:31 DEBUG:[Worker::doReduceTask] WorkerId:3 end
+2021/07/31 20:08:31 DEBUG:[Master::regTask]: m.taskStats[task.Seq]:{Status:2 WorkerId:3 StartTime:2021-07-31 20:08:31.682820805 +0800 CST m=+13.873317450}
+2021/07/31 20:08:31 DEBUG:[Master::GetOneTask] in get one Task, args:&{WorkerId:3}, reply:&{Task:0xc0002221c0}
+2021/07/31 20:08:31 INFO:[Worker::reqTask] 3 worker get task:&{FileName: NReduce:10 NMaps:8 Seq:9 Phase:1 Alive:true}
+2021/07/31 20:08:31 DEBUG:[Worker::doTask] in do Task
+2021/07/31 20:08:31 DEBUG:[Worker::doReduceTask] WorkerId:3 begin
+2021/07/31 20:08:31 DEBUG:[Master::schedule] in
+2021/07/31 20:08:32 DEBUG:[Master::schedule] in
+2021/07/31 20:08:32 DEBUG:[Master::schedule] in
+2021/07/31 20:08:32 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:6 Phase:1 WorkerId:2}, taskPhase: 1
+2021/07/31 20:08:32 DEBUG:[Master::schedule] in
+2021/07/31 20:08:32 DEBUG:[Worker::reportTask] info args:{Done:true Seq:6 Phase:1 WorkerId:2},reply:{}
+2021/07/31 20:08:32 DEBUG:[Worker::doReduceTask] WorkerId:2 end
+2021/07/31 20:08:33 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:8 Phase:1 WorkerId:1}, taskPhase: 1
+2021/07/31 20:08:33 DEBUG:[Master::schedule] in
+2021/07/31 20:08:33 DEBUG:[Worker::reportTask] info args:{Done:true Seq:8 Phase:1 WorkerId:1},reply:{}
+2021/07/31 20:08:33 DEBUG:[Worker::doReduceTask] WorkerId:1 end
+2021/07/31 20:08:33 DEBUG:[Master::ReportTask] get report task: &{Done:true Seq:9 Phase:1 WorkerId:3}, taskPhase: 1
+2021/07/31 20:08:33 DEBUG:[Master::schedule] in
+2021/07/31 20:08:33 DEBUG:[Worker::reportTask] info args:{Done:true Seq:9 Phase:1 WorkerId:3},reply:{}
+2021/07/31 20:08:33 DEBUG:[Worker::doReduceTask] WorkerId:3 end
+2021/07/31 20:08:34 DEBUG:[Worker::call] unexpected EOF
+2021/07/31 20:08:34 ERROR:[Worker::reqTask] worker get task fail,exit
+2021/07/31 20:08:34 DEBUG:[Worker::call] unexpected EOF
+2021/07/31 20:08:34 ERROR:[Worker::reqTask] worker get task fail,exit
+2021/07/31 20:08:34 DEBUG:[Worker::call] unexpected EOF
+2021/07/31 20:08:34 ERROR:[Worker::reqTask] worker get task fail,exit
++ grep .
++ sort mr-out-0 mr-out-1 mr-out-2 mr-out-3 mr-out-4 mr-out-5 mr-out-6 mr-out-7 mr-out-8 mr-out-9
++ cmp mr-wc-all mr-correct-wc.txt
++ echo --- wc test: PASS
+--- wc test: PASS
++ wait
++ wait
++ wait
+[root@VM-0-10-centos main]#
