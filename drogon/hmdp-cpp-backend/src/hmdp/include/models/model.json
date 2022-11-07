@@ -1,0 +1,10 @@
+{
+	"rdbms": "mysql",
+	"host": "$MYSQL_HOST_IP",
+	"port": $MYSQL_HOST_PORT,
+	"dbname": "$MYSQL_DB_NAME",
+	"schema": "public",
+	"user": "$MYSQL_DB_USER",
+	"password": "$MYSQL_DB_PWD",
+	"tables": []
+}

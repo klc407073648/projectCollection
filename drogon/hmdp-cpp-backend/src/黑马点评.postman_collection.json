@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "04d19f14-a3c9-4967-a937-d12fef05f3e0",
+		"name": "黑马点评",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "发送短信验证码",
+			"item": [
+				{
+					"name": "发送短信验证码",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\":\"15250981510\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/code",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"code"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "12345",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\":\"15250981510\",\r\n    \"code\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "12345",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取当前用户",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"type": "text",
+								"value": "B0A7FE4B1F564770887D53182225EA2E"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\":\"15250981510\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"me"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "12345",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "商铺",
+			"item": [
+				{
+					"name": "新增商铺",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"address\": \"???1035??????????\",\r\n        \"area\": \"???/??\",\r\n        \"avg_price\": 85,\r\n        \"comments\": 1499,\r\n        \"create_time\": \"2021-12-22 19:00:13\",\r\n        \"id\": 19,\r\n        \"images\": \"https://p0.meituan.net/bbia/c1870d570e73accbc9fee90b48faca41195272.jpg,http://p0.meituan.net/mogu/397e40c28fc87715b3d5435710a9f88d706914.jpg,https://qcloud.dpfile.com/pc/MZTdRDqCZdbPDUO0Hk6lZENRKzpKRF7kavrkEI99OxqBZTzPfIxa5E33gBfGouhFuzFvxlbkWx5uwqY2qcjixFEuLYk00OmSS1IdNpm8K8sG4JN9RIm2mTKcbLtc2o2vmIU_8ZGOT1OjpJmLxG6urQ.jpg\",\r\n        \"name\": \"??????�????????\",\r\n        \"open_hours\": \"11:30-03:00\",\r\n        \"score\": 46,\r\n        \"sold\": 2160,\r\n        \"type_id\": 1,\r\n        \"update_time\": \"2022-01-11 16:12:26\",\r\n        \"x\": 120.151505,\r\n        \"y\": 30.333421999999999\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/shop",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"shop"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "12345",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新商铺",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"address\": \"???1035??????????\",\r\n        \"area\": \"???/??\",\r\n        \"avg_price\": 85,\r\n        \"comments\": 1490,\r\n        \"create_time\": \"2021-12-22 19:00:13\",\r\n        \"id\": 2,\r\n        \"images\": \"https://p0.meituan.net/bbia/c1870d570e73accbc9fee90b48faca41195272.jpg,http://p0.meituan.net/mogu/397e40c28fc87715b3d5435710a9f88d706914.jpg,https://qcloud.dpfile.com/pc/MZTdRDqCZdbPDUO0Hk6lZENRKzpKRF7kavrkEI99OxqBZTzPfIxa5E33gBfGouhFuzFvxlbkWx5uwqY2qcjixFEuLYk00OmSS1IdNpm8K8sG4JN9RIm2mTKcbLtc2o2vmIU_8ZGOT1OjpJmLxG6urQ.jpg\",\r\n        \"name\": \"??????�????????\",\r\n        \"open_hours\": \"11:30-03:00\",\r\n        \"score\": 46,\r\n        \"sold\": 2160,\r\n        \"type_id\": 1,\r\n        \"update_time\": \"2022-01-11 16:12:26\",\r\n        \"x\": 120.151505,\r\n        \"y\": 30.333421999999999\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/shop",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"shop"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "12345",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询商铺",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"type": "text",
+								"value": "B0A7FE4B1F564770887D53182225EA2E"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\":\"15250981510\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/shop/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"shop",
+								"2"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "12345",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "81.68.132.31:8083"
+		}
+	]
+}
